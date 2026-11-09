@@ -103,9 +103,10 @@ def render(result):
     ]
     for r in result["rows"]:
         lines.append(f"| {md(r.get('company', r['slug']))} | {md(r.get('category', 'unknown'))} | {r.get('displayed_revenue') if r.get('displayed_revenue') is not None else 'unknown'} | {md(r.get('revenue_period') or 'unknown')} | {r.get('annual_multiple') if r.get('annual_multiple') is not None else 'unknown'} | {r['status']} |")
-    lines += ["", "## Category samples", "", "| Category | n | Missing MRR | Rankable |", "|---|---:|---:|---|"]
+    lines += ["", "## Category samples", "", "| Category | n | Missing MRR | Average explicit MRR | Rankable |", "|---|---:|---:|---:|---|"]
     for r in result["categories"]:
-        lines.append(f"| {md(r['category'])} | {r['sample_count']} | {r['missing_mrr']} | {r['rankable']} |")
+        average = r["average_displayed_mrr"] if r["average_displayed_mrr"] is not None else "unknown"
+        lines.append(f"| {md(r['category'])} | {r['sample_count']} | {r['missing_mrr']} | {average} | {r['rankable']} |")
     lines += ["", "Categories with fewer than three captured companies are context, not rankings. Only explicit monthly revenue enters MRR summaries; unknown-period revenue stays displayed revenue. No personal contacts are included."]
     return "\n".join(lines) + "\n"
 

@@ -100,7 +100,7 @@ python3 "$SKILL_DIR/scripts/report.py" input.json \
 Return:
 
 - The decision and sample limits first.
-- Category samples with `n`, missing counts, and suppression below `n=3`.
+- Category samples with `n`, missing counts, average explicit monthly MRR, and suppression below `n=3`.
 - The company evidence rows with source links, displayed revenue periods, and calculated multiples where supported.
 - Failed/truncated URLs and unknown fields.
 - Paths to `report.md`, `companies.csv`, and `run.json`.

@@ -12,9 +12,9 @@ This is a bounded, search-selected sample, not a market census. Metrics are disp
 
 ## Category samples
 
-| Category | n | Missing MRR | Rankable |
-|---|---:|---:|---|
-| SEO | 3 | 0 | True |
-| Sales | 2 | 2 | False |
+| Category | n | Missing MRR | Average explicit MRR | Rankable |
+|---|---:|---:|---:|---|
+| SEO | 3 | 0 | 2666.67 | True |
+| Sales | 2 | 2 | unknown | False |
 
 Categories with fewer than three captured companies are context, not rankings. Only explicit monthly revenue enters MRR summaries; unknown-period revenue stays displayed revenue. No personal contacts are included.

@@ -88,10 +88,10 @@ The example is synthetic. The [live-check note](docs/live-check.md) records what
 | Delta Forms | Sales | 3000.0 | unknown | unknown | new |
 | Ember CRM | Sales | unknown | unknown | unknown | new |
 
-| Category | n | Missing MRR | Rankable |
-|---|---:|---:|---|
-| SEO | 3 | 0 | True |
-| Sales | 2 | 2 | False |
+| Category | n | Missing MRR | Average explicit MRR | Rankable |
+|---|---:|---:|---:|---|
+| SEO | 3 | 0 | 2666.67 | True |
+| Sales | 2 | 2 | unknown | False |
 
 A displayed multiple stays a displayed multiple. The helper calculates its own annual multiple only when price, positive revenue, and an explicit monthly period are all present. Unknown-period revenue never enters the MRR average.
 
@@ -135,4 +135,4 @@ docs/                    Setup, schema, testing, and live-check notes
 
 ---
 
-Built by Yaron Been. MIT licensed. Powered by Bright Data, without implying endorsement.
+Independent project by Yaron Been. MIT licensed. Powered by Bright Data; no affiliation or endorsement is implied.
