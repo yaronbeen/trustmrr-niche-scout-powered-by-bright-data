@@ -4,6 +4,19 @@
 
 Turn public TrustMRR pages into a cited niche snapshot. Keep displayed revenue attached to its source and its stated period. Keep missing data missing. Walk away with a small sample you can defend, not a market fantasy.
 
+## In plain English
+
+**Compare startup niches using real, public TrustMRR revenue data instead of gut feeling.**
+
+An AI-agent skill. You name a niche (for example, “SEO tools”). Your agent uses Bright Data MCP to read the public TrustMRR pages, then builds a small, sourced table of companies and categories.
+
+| | |
+|---|---|
+| **You give it** | A niche or category, plus an optional prior `run.json`. |
+| **You get** | `companies.csv`, `categories.csv` (counts, average and median MRR) and `report.md`, every number linked to its source page. |
+| **Made for** | Founders and indie hackers deciding which niche to research before building. |
+| **Boundaries** | Not an acquisition list, lead list or market-size estimate. |
+
 ## The decision
 
 **Which category deserves a closer look?**
