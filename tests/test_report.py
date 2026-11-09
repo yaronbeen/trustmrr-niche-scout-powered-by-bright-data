@@ -33,7 +33,7 @@ class TrustMRRTests(unittest.TestCase):
         self.assertEqual(summary["Sales"]["missing_mrr"], 1)
         result = analyze({"rows": [{"slug": str(n), "category": "Sales", "displayed_revenue": n, "revenue_period": "monthly"} for n in (100, 200)]})
         self.assertIn("Average explicit MRR", result["report"])
-        self.assertIn("| Sales | 2 | 0 | 150.0 | False |", result["report"])
+        self.assertIn("| Sales | 2 | 0 | 150.0 | 150.0 | False |", result["report"])
 
     def test_dedupe_and_personal_fields_are_removed(self):
         rows = [
@@ -90,6 +90,7 @@ class TrustMRRTests(unittest.TestCase):
         self.assertIsNone(result["rows"][0]["mrr"])
         self.assertEqual(result["rows"][0]["displayed_revenue"], 3000.0)
         self.assertIsNone(result["categories"][0]["average_displayed_mrr"])
+        self.assertIsNone(result["categories"][0]["median_explicit_mrr"])
         self.assertIn("Displayed revenue", result["report"])
         self.assertIn("Acme \\| Spam Injected", result["report"])
 

@@ -18,7 +18,7 @@ No acquisition shortlist. No founder profiling. No personal contact enrichment. 
 
 ## Why Bright Data
 
-A directory is only useful when your agent can turn pages into evidence rows. [Bright Data](https://brightdata.com/) MCP brings public page-to-Markdown collection into the same workflow as the analysis. One connection. No one-off scraper project. Less plumbing, more time deciding what the displayed numbers actually mean.
+A directory is only useful when your agent can turn pages into evidence rows. [Bright Data](https://docs.brightdata.com/products/mcp-server/overview) MCP brings public page-to-Markdown collection into the same workflow as the analysis. One connection. No one-off scraper project. Less plumbing, more time deciding what the displayed numbers actually mean.
 
 ## Start with 5,000 free credits
 
@@ -30,8 +30,9 @@ The default plan uses **14 public-page requests**, with at most **2 retries**. Y
 
 - `report.md`: category samples and company-level evidence rows.
 - `companies.csv`: stable `slug` keys for Sheets or your own niche-research queue.
+- `categories.csv`: sortable sample counts, missing-MRR counts, averages, and medians for category comparison.
 - `run.json`: the current snapshot to pass back next week for new, changed, and unchanged rows.
-- Clear `unknown` values, sample sizes, missing-MRR counts, and a no-ranking rule below three captured companies.
+- Clear `unknown` values, average and median explicit MRR, and a no-ranking rule below three captured companies.
 
 Rows that disappear from a later input are not labeled as removed or delisted; the diff covers rows present in the current capture.
 
@@ -47,16 +48,22 @@ Show me the 14-request plan first. Retry a failed page at most once, with at mos
 TrustMRR's claims. Exclude founder names and personal contacts.
 
 Normalize the evidence to this skill's schema and run scripts/report.py.
-Return the category caveats, company evidence rows, and output paths.
+Return the category caveats, company evidence rows, categories.csv comparison, and output paths.
 Do not turn this into a lead list, contact anyone, or buy anything.
 ```
 
 ## Install
 
-Requires Python 3.10+, an agent with Bright Data MCP connected as `brightdata`, and access to this private repo.
+Requires Python 3.10+ and an MCP-compatible agent. This is a public repo.
+
+### 1. Connect Bright Data MCP
+
+Follow [Install Bright Data MCP](docs/install-bright-data-mcp.md). Choose hosted or local setup, then verify `search_engine` and `scrape_as_markdown` are connected as `brightdata`.
+
+### 2. Clone the skill
 
 ```bash
-git clone git@github.com:yaronbeen/trustmrr-niche-scout-powered-by-bright-data.git \
+git clone https://github.com/yaronbeen/trustmrr-niche-scout-powered-by-bright-data.git \
   ~/.claude/skills/trustmrr-niche-scout
 ```
 
@@ -88,12 +95,12 @@ The example is synthetic. The [live-check note](docs/live-check.md) records what
 | Delta Forms | Sales | 3000.0 | unknown | unknown | new |
 | Ember CRM | Sales | unknown | unknown | unknown | new |
 
-| Category | n | Missing MRR | Average explicit MRR | Rankable |
-|---|---:|---:|---:|---|
-| SEO | 3 | 0 | 2666.67 | True |
-| Sales | 2 | 2 | unknown | False |
+| Category | n | Missing MRR | Average explicit MRR | Median explicit MRR | Rankable |
+|---|---:|---:|---:|---:|---|
+| SEO | 3 | 0 | 2666.67 | 2500.0 | True |
+| Sales | 2 | 2 | unknown | unknown | False |
 
-A displayed multiple stays a displayed multiple. The helper calculates its own annual multiple only when price, positive revenue, and an explicit monthly period are all present. Unknown-period revenue never enters the MRR average.
+A displayed multiple stays a displayed multiple. The helper calculates its own annual multiple only when price, positive revenue, and an explicit monthly period are all present. Unknown-period revenue never enters the MRR average or median. Use the median alongside the average so one large listing does not dominate the comparison.
 
 ## Tests
 
@@ -103,7 +110,7 @@ This repo was built test-first. The first commit contains the tests before the i
 python3 -m unittest discover -s tests -v
 ```
 
-Tests cover money parsing, unknown periods, dedupe, personal-field removal, small-sample suppression, CSV formula injection, deterministic diffs, output files, and a sanitized live capture. See [the testing note](docs/testing.md).
+Tests cover money parsing, unknown periods, dedupe, personal-field removal, small-sample suppression, category averages and medians, `categories.csv`, MCP installation docs, CSV formula injection, deterministic diffs, and a sanitized live capture. See [the testing note](docs/testing.md).
 
 ## What this is not
 

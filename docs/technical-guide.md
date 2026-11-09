@@ -2,16 +2,9 @@
 
 ## 1. Connect Bright Data MCP
 
-Create a Bright Data API token in your account. Keep it in your local secret store or environment. Never commit it, paste it into an example, or include it in a report.
+Follow [Install Bright Data MCP](install-bright-data-mcp.md) for the hosted URL, local `npx @brightdata/mcp` configuration, Claude/Cursor setup, OpenCode V2 setup, token handling, and connection checks.
 
-Follow the [official remote MCP quickstart](https://docs.brightdata.com/products/mcp-server/remote/quickstart). The hosted endpoints documented there are:
-
-- SSE: `https://mcp.brightdata.com/sse?token=YOUR_API_TOKEN`
-- Streamable HTTP: `https://mcp.brightdata.com/mcp?token=YOUR_API_TOKEN`
-
-Configure the MCP server under the name `brightdata` in Claude Code or OpenCode. Use the client's secret-safe configuration flow. If the tools are not visible to the agent, stop and fix the connection before collecting data.
-
-Read the [current free-tier terms](https://docs.brightdata.com/general/account/billing-and-pricing/free-tier) for eligibility, resets, included products, and usage accounting. The README's 5,000-credit offer is a starting allowance, not an unlimited-use claim.
+This skill requires `search_engine` and `scrape_as_markdown` under the server name `brightdata`. Keep the token out of examples, reports, Git history, and shared URLs. If the tools are not visible, stop and fix the connection before collecting data. The README's 5,000-credit offer is a shared monthly starting allowance, not an unlimited-use claim.
 
 ## 2. Tools used here
 
@@ -44,7 +37,10 @@ Upsert key: `slug`
 
 Columns: `slug`, `company`, `category`, `displayed_revenue`, `revenue_period`, `mrr`, `growth`, `price`, `annual_multiple`, `status`, `source_url`, `captured_at`.
 
-`displayed_revenue` preserves the visible number. `mrr` is populated only when `revenue_period=monthly`; unknown-period values never enter MRR averages.
+`displayed_revenue` preserves the visible number. `mrr` is populated only when `revenue_period=monthly`; unknown-period values never enter MRR averages or medians.
+
+File: `categories.csv`
+Columns: `category`, `sample_count`, `missing_mrr`, `average_displayed_mrr`, `median_explicit_mrr`, `rankable`. The median makes outlier skew visible; neither statistic is a market estimate, and categories below three rows remain unrankable.
 
 JSON-valued CSV cells are JSON strings. Cells beginning with spreadsheet formula characters are prefixed with an apostrophe.
 

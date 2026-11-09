@@ -17,7 +17,7 @@ Turn selected public TrustMRR pages into a cited, cautious report. Answer **what
 - Do not collect founder names, avatars, handles, emails, or personal profiles. Company-level research only.
 - Attribute figures to TrustMRR at the capture time. Never claim independent verification.
 - `unknown` is not zero. A bounded leaderboard sample is not a market estimate.
-- If Bright Data MCP is unavailable, ask the user to connect it and stop.
+- If Bright Data MCP is unavailable, follow `docs/install-bright-data-mcp.md` or ask the user to connect it; stop until the required tools are visible.
 
 ## Inputs
 
@@ -100,10 +100,10 @@ python3 "$SKILL_DIR/scripts/report.py" input.json \
 Return:
 
 - The decision and sample limits first.
-- Category samples with `n`, missing counts, average explicit monthly MRR, and suppression below `n=3`.
+- Category samples with `n`, missing counts, average and median explicit monthly MRR, and suppression below `n=3`. Use the median to spot average-skewing outliers; do not treat either as a market estimate.
 - The company evidence rows with source links, displayed revenue periods, and calculated multiples where supported.
 - Failed/truncated URLs and unknown fields.
-- Paths to `report.md`, `companies.csv`, and `run.json`.
+- Paths to `report.md`, `companies.csv`, `categories.csv`, and `run.json`. Use `categories.csv` for sorting and follow-up research, not as a lead list.
 
 ## Failure handling
 

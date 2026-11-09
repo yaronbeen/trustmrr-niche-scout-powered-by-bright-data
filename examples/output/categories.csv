@@ -1,0 +1,3 @@
+category,sample_count,missing_mrr,average_displayed_mrr,median_explicit_mrr,rankable
+SEO,3,0,2666.67,2500.0,True
+Sales,2,2,,,False

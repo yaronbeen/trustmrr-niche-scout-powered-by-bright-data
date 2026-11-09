@@ -7,6 +7,7 @@ import json
 import re
 from collections import defaultdict
 from pathlib import Path
+from statistics import median
 
 PUBLIC_FIELDS = {"company", "slug", "category", "mrr", "displayed_revenue", "growth", "price", "revenue_period", "displayed_multiple", "source_url", "captured_at"}
 
@@ -69,6 +70,7 @@ def category_summary(rows):
             "sample_count": len(members),
             "missing_mrr": len(members) - len(known),
             "average_displayed_mrr": round(sum(known) / len(known), 2) if known else None,
+            "median_explicit_mrr": round(median(known), 2) if known else None,
             "rankable": len(members) >= 3,
         })
     return sorted(result, key=lambda r: r["category"])
@@ -103,10 +105,11 @@ def render(result):
     ]
     for r in result["rows"]:
         lines.append(f"| {md(r.get('company', r['slug']))} | {md(r.get('category', 'unknown'))} | {r.get('displayed_revenue') if r.get('displayed_revenue') is not None else 'unknown'} | {md(r.get('revenue_period') or 'unknown')} | {r.get('annual_multiple') if r.get('annual_multiple') is not None else 'unknown'} | {r['status']} |")
-    lines += ["", "## Category samples", "", "| Category | n | Missing MRR | Average explicit MRR | Rankable |", "|---|---:|---:|---:|---|"]
+    lines += ["", "## Category samples", "", "| Category | n | Missing MRR | Average explicit MRR | Median explicit MRR | Rankable |", "|---|---:|---:|---:|---:|---|"]
     for r in result["categories"]:
         average = r["average_displayed_mrr"] if r["average_displayed_mrr"] is not None else "unknown"
-        lines.append(f"| {md(r['category'])} | {r['sample_count']} | {r['missing_mrr']} | {average} | {r['rankable']} |")
+        middle = r["median_explicit_mrr"] if r["median_explicit_mrr"] is not None else "unknown"
+        lines.append(f"| {md(r['category'])} | {r['sample_count']} | {r['missing_mrr']} | {average} | {middle} | {r['rankable']} |")
     lines += ["", "Categories with fewer than three captured companies are context, not rankings. Only explicit monthly revenue enters MRR summaries; unknown-period revenue stays displayed revenue. No personal contacts are included."]
     return "\n".join(lines) + "\n"
 
@@ -126,10 +129,16 @@ def write_outputs(result, output_dir):
     (out / "run.json").write_text(json.dumps(result["snapshot"], indent=2, sort_keys=True) + "\n")
     fields = ["slug", "company", "category", "displayed_revenue", "revenue_period", "mrr", "growth", "price", "annual_multiple", "status", "source_url", "captured_at"]
     with (out / "companies.csv").open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in result["rows"]:
             writer.writerow({key: csv_cell(row.get(key)) for key in fields})
+    category_fields = ["category", "sample_count", "missing_mrr", "average_displayed_mrr", "median_explicit_mrr", "rankable"]
+    with (out / "categories.csv").open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=category_fields, extrasaction="ignore", lineterminator="\n")
+        writer.writeheader()
+        for row in result["categories"]:
+            writer.writerow({key: csv_cell(row.get(key)) for key in category_fields})
 
 
 def main():
