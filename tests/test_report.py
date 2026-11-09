@@ -94,6 +94,28 @@ class TrustMRRTests(unittest.TestCase):
         self.assertIn("Acme \\| Spam Injected", result["report"])
 
 
+    def test_category_csv_includes_median_for_comparison(self):
+        rows = [{"slug": str(n), "category": "SEO", "displayed_revenue": n, "revenue_period": "monthly"} for n in (100, 200, 300, 10000)]
+        result = analyze({"rows": rows})
+        self.assertEqual(result["categories"][0]["median_explicit_mrr"], 250.0)
+        with tempfile.TemporaryDirectory() as tmp:
+            write_outputs(result, tmp)
+            with (Path(tmp) / "categories.csv").open() as handle:
+                categories = list(csv.DictReader(handle))
+            self.assertEqual(float(categories[0]["median_explicit_mrr"]), 250.0)
+            self.assertEqual(int(categories[0]["sample_count"]), 4)
+
+    def test_bright_data_mcp_installation_is_documented(self):
+        root = Path(__file__).parents[1]
+        readme = (root / "README.md").read_text()
+        guide = (root / "docs" / "install-bright-data-mcp.md").read_text()
+        self.assertNotIn("private repo", readme.lower())
+        self.assertIn("docs/install-bright-data-mcp.md", readme)
+        self.assertIn("@brightdata/mcp", guide)
+        self.assertIn("https://mcp.brightdata.com/mcp?token=", guide)
+        self.assertIn("search_engine,scrape_as_markdown", guide)
+        self.assertIn("{env:BRIGHT_DATA_API_TOKEN}", guide)
+
     def test_shipped_example_output_and_readme_table_are_current(self):
         root = Path(__file__).parents[1]
         result = analyze(json.loads((root / "examples" / "input.json").read_text()))
