@@ -56,7 +56,7 @@ class TrustMRRTests(unittest.TestCase):
         ]}
         first = analyze(payload)
         second_payload = dict(payload)
-        second_payload["rows"] = payload["rows"][:2] + [{"company": "New Co", "slug": "new-co", "category": "SEO", "mrr": "$3k", "source_url": "https://trustmrr.com/startup/new-co", "captured_at": "2026-11-10"}]
+        second_payload["rows"] = [payload["rows"][0], dict(payload["rows"][1], mrr="$2.5k"), {"company": "New Co", "slug": "new-co", "category": "SEO", "mrr": "$3k", "source_url": "https://trustmrr.com/startup/new-co", "captured_at": "2026-11-10"}]
         second = analyze(second_payload, first["snapshot"])
         status = {r["slug"]: r["status"] for r in second["rows"]}
         self.assertEqual(status["new-co"], "new")
@@ -69,6 +69,13 @@ class TrustMRRTests(unittest.TestCase):
             self.assertTrue((Path(tmp) / "run.json").is_file())
             with (Path(tmp) / "companies.csv").open() as f:
                 self.assertEqual(len(list(csv.DictReader(f))), 3)
+
+    def test_sanitized_live_capture_preserves_unknown_period(self):
+        fixture = json.loads((Path(__file__).parent / "fixtures" / "sanitized_live.json").read_text())
+        rows = normalize_records(fixture["rows"])
+        self.assertEqual(rows[0]["mrr"], 83.0)
+        self.assertEqual(rows[1]["mrr"], 971.0)
+        self.assertTrue(all(row["annual_multiple"] is None for row in rows))
 
 
 if __name__ == "__main__":

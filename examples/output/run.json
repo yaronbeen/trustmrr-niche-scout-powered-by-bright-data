@@ -1,0 +1,74 @@
+{
+  "rows": [
+    {
+      "annual_multiple": 1.5,
+      "captured_at": "2026-11-09T12:00:00Z",
+      "category": "SEO",
+      "company": "Acme Analytics",
+      "displayed_multiple": "1.5x",
+      "growth": 8,
+      "mrr": 4000.0,
+      "price": 72000.0,
+      "revenue_period": "monthly",
+      "slug": "acme-analytics",
+      "source_url": "https://trustmrr.com/startup/acme-analytics",
+      "status": "new"
+    },
+    {
+      "annual_multiple": 1.5,
+      "captured_at": "2026-11-09T12:01:00Z",
+      "category": "SEO",
+      "company": "Beta Keywords",
+      "displayed_multiple": "1.5x",
+      "growth": 3,
+      "mrr": 2500.0,
+      "price": 45000.0,
+      "revenue_period": "monthly",
+      "slug": "beta-keywords",
+      "source_url": "https://trustmrr.com/startup/beta-keywords",
+      "status": "new"
+    },
+    {
+      "annual_multiple": null,
+      "captured_at": "2026-11-09T12:02:00Z",
+      "category": "SEO",
+      "company": "Coda Content",
+      "growth": null,
+      "mrr": 1500.0,
+      "price": null,
+      "revenue_period": "monthly",
+      "slug": "coda-content",
+      "source_url": "https://trustmrr.com/startup/coda-content",
+      "status": "new"
+    },
+    {
+      "annual_multiple": null,
+      "captured_at": "2026-11-09T12:03:00Z",
+      "category": "Sales",
+      "company": "Delta Forms",
+      "displayed_multiple": "1.4x",
+      "growth": 4,
+      "mrr": 3000.0,
+      "price": 50000.0,
+      "revenue_period": "unknown",
+      "slug": "delta-forms",
+      "source_url": "https://trustmrr.com/startup/delta-forms",
+      "status": "new"
+    },
+    {
+      "annual_multiple": null,
+      "captured_at": "2026-11-09T12:04:00Z",
+      "category": "Sales",
+      "company": "Ember CRM",
+      "growth": null,
+      "mrr": null,
+      "price": 30000.0,
+      "revenue_period": "unknown",
+      "slug": "ember-crm",
+      "source_url": "https://trustmrr.com/startup/ember-crm",
+      "status": "new"
+    }
+  ],
+  "run_id": "3834fa2c0f2d",
+  "schema_version": 1
+}

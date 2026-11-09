@@ -1,0 +1,9 @@
+{
+  "capture_date": "2026-11-09",
+  "source": "TrustMRR public home page",
+  "sanitization": "Founder names, images, and unrelated leaderboard content removed. Values remain source-displayed claims.",
+  "rows": [
+    {"company": "Sportii App", "slug": "sportii-app", "category": "Community", "mrr": "$971", "price": "$53k", "revenue_period": "unknown", "displayed_multiple": "4.5x", "source_url": "https://trustmrr.com/startup/sportii-app", "captured_at": "2026-11-09"},
+    {"company": "Nex File: File Manager", "slug": "nex-file-file-manager", "category": "Productivity", "mrr": "$83", "price": "$2.5k", "revenue_period": "unknown", "displayed_multiple": "2.5x", "source_url": "https://trustmrr.com/startup/nex-file-file-manager", "captured_at": "2026-11-09"}
+  ]
+}
