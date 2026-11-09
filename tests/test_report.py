@@ -31,6 +31,9 @@ class TrustMRRTests(unittest.TestCase):
         self.assertFalse(summary["SEO"]["rankable"])
         self.assertTrue(summary["Sales"]["rankable"])
         self.assertEqual(summary["Sales"]["missing_mrr"], 1)
+        result = analyze({"rows": [{"slug": str(n), "category": "Sales", "displayed_revenue": n, "revenue_period": "monthly"} for n in (100, 200)]})
+        self.assertIn("Average explicit MRR", result["report"])
+        self.assertIn("| Sales | 2 | 0 | 150.0 | False |", result["report"])
 
     def test_dedupe_and_personal_fields_are_removed(self):
         rows = [
