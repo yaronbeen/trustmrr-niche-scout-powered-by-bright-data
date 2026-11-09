@@ -1,6 +1,6 @@
 ---
 name: trustmrr-niche-scout
-description: Analyze bounded public TrustMRR samples with Bright Data MCP for niche validation, acquisition research, or company-level account research. Use when asked to scrape TrustMRR, compare displayed startup MRR by category, screen listed startups, or build a company-only TrustMRR research list.
+description: Analyze bounded public TrustMRR samples with Bright Data MCP for cautious niche validation. Use when asked to scrape TrustMRR, compare displayed startup revenue by category, preserve unknown revenue periods, or recheck a small company sample.
 allowed-tools: Bash, Read, Write, brightdata_scrape_as_markdown
 ---
 
@@ -23,9 +23,10 @@ Turn selected public TrustMRR pages into a cited, cautious report. Answer **what
 
 Ask only for missing essentials:
 
-1. Goal: `niche_validation`, `acquisition_screen`, or `company_research`.
-2. Optional category, displayed-MRR band, and company-fit rules.
-3. Optional start URLs. Defaults: `https://trustmrr.com/` and `https://trustmrr.com/acquire`.
+1. Category or niche question.
+2. Optional start URLs. Defaults: `https://trustmrr.com/` and `https://trustmrr.com/acquire`.
+
+The helper does not apply acquisition, lead, MRR-band, or company-fit filters. Do not promise them.
 
 ## Collection plan
 
@@ -59,7 +60,7 @@ Create `input.json` with this schema:
       "company": "Example Co",
       "slug": "example-co",
       "category": "SEO",
-      "mrr": "$4k",
+      "displayed_revenue": "$4k",
       "growth": 5,
       "price": "$72k",
       "revenue_period": "monthly",
@@ -73,9 +74,9 @@ Create `input.json` with this schema:
 
 - `slug`, `source_url`, and `captured_at` are required.
 - Parse only visible fields. Keep the raw displayed multiple separately.
-- Set `revenue_period` to `monthly` only when the page explicitly says MRR or monthly revenue. Otherwise use `unknown`.
-- The helper calculates `annual_multiple = price / (MRR * 12)` only when all inputs are explicit.
-- For company research, apply the user's explicit company-level filters and keep an excluded-row ledger. Do not add people or contact data.
+- Put the visible number in `displayed_revenue`. Set `revenue_period` to `monthly` only when the page explicitly says MRR or monthly revenue. Otherwise use `unknown`.
+- The helper sets `mrr` only for explicit monthly revenue and calculates `annual_multiple = price / (MRR * 12)` only when all inputs are explicit.
+- Only explicit monthly values enter category MRR averages. Unknown-period revenue remains visible as displayed revenue.
 
 ### 4. Run the tested helper
 
@@ -100,7 +101,7 @@ Return:
 
 - The decision and sample limits first.
 - Category samples with `n`, missing counts, and suppression below `n=3`.
-- The filtered company or acquisition rows with source links.
+- The company evidence rows with source links, displayed revenue periods, and calculated multiples where supported.
 - Failed/truncated URLs and unknown fields.
 - Paths to `report.md`, `companies.csv`, and `run.json`.
 
@@ -109,7 +110,7 @@ Return:
 - Timeout, 403, CAPTCHA, empty content: mark capture failed; use one retry if budget remains.
 - Truncated content: keep only visible rows and state the truncation. Never call missing fields absent sitewide.
 - Conflicting fields: preserve both source excerpts in your notes and set the normalized numeric field unknown.
-- No qualifying companies: return an empty shortlist, not a fabricated recommendation.
+- No usable company rows: return an empty sample and an evidence gap, not a fabricated niche recommendation.
 
 ## Output limits
 

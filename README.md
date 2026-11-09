@@ -2,19 +2,19 @@
 
 > **Do not buy the niche story. Check the listings behind it.**
 
-Turn public TrustMRR pages into a cited niche snapshot, an acquisition watchlist, or a company-only research list. Keep the revenue figures attached to their source. Keep missing data missing. Walk away with a shortlist you can defend, not a market fantasy.
+Turn public TrustMRR pages into a cited niche snapshot. Keep displayed revenue attached to its source and its stated period. Keep missing data missing. Walk away with a small sample you can defend, not a market fantasy.
 
 ## The decision
 
-**Which category, listing, or company deserves a closer look?**
+**Which category deserves a closer look?**
 
 Use it to:
 
 - Compare small category samples before choosing a niche to research.
-- Screen displayed price and MRR figures for acquisition follow-up.
-- Build a company-only prospect research list that matches your category and MRR rules.
+- Inspect the company rows behind a category without mixing unknown-period revenue into MRR.
+- Recheck the same captured companies for displayed-figure changes.
 
-No founder profiling. No personal contact enrichment. No invented “verified by me” revenue claims.
+No acquisition shortlist. No founder profiling. No personal contact enrichment. No invented “verified by me” revenue claims.
 
 ## Why Bright Data
 
@@ -28,17 +28,17 @@ The default plan uses **14 public-page requests**, with at most **2 retries**. Y
 
 ## What you get
 
-- `report.md`: category samples, company rows, and acquisition context.
-- `companies.csv`: stable `slug` keys for Sheets, a CRM research stage, or your own review queue.
-- `run.json`: the snapshot to pass back next week for new, changed, and unchanged rows.
+- `report.md`: category samples and company-level evidence rows.
+- `companies.csv`: stable `slug` keys for Sheets or your own niche-research queue.
+- `run.json`: the current snapshot to pass back next week for new, changed, and unchanged rows.
 - Clear `unknown` values, sample sizes, missing-MRR counts, and a no-ranking rule below three captured companies.
+
+Rows that disappear from a later input are not labeled as removed or delisted; the diff covers rows present in the current capture.
 
 ## Give this to your agent
 
 ```text
-Use trustmrr-niche-scout for [niche validation / acquisition screening / company research].
-My category filter is [category]. My displayed-MRR band is [minimum] to [maximum].
-My optional company-fit rules are [rules].
+Use trustmrr-niche-scout for niche validation in [category].
 
 Use Bright Data MCP to fetch https://trustmrr.com/ and
 https://trustmrr.com/acquire, then at most 12 discovered public startup pages.
@@ -47,8 +47,8 @@ Show me the 14-request plan first. Retry a failed page at most once, with at mos
 TrustMRR's claims. Exclude founder names and personal contacts.
 
 Normalize the evidence to this skill's schema and run scripts/report.py.
-Return the category caveats, the manual-review shortlist, and the output paths.
-Do not contact anyone or buy anything.
+Return the category caveats, company evidence rows, and output paths.
+Do not turn this into a lead list, contact anyone, or buy anything.
 ```
 
 ## Install
@@ -80,12 +80,20 @@ The example is synthetic. The [live-check note](docs/live-check.md) records what
 
 ## Example output
 
-| Company | Category | Displayed MRR | Annual multiple | Decision context |
-|---|---|---:|---:|---|
-| Acme Analytics | SEO | $4,000 | 1.50 | Manual review |
-| Beta Forms | Sales | $2,500 | unknown | Revenue period unknown |
+| Company | Category | Displayed revenue | Period | Annual multiple | Status |
+|---|---|---:|---|---:|---|
+| Acme Analytics | SEO | 4000.0 | monthly | 1.5 | new |
+| Beta Keywords | SEO | 2500.0 | monthly | 1.5 | new |
+| Coda Content | SEO | 1500.0 | monthly | unknown | new |
+| Delta Forms | Sales | 3000.0 | unknown | unknown | new |
+| Ember CRM | Sales | unknown | unknown | unknown | new |
 
-A displayed multiple stays a displayed multiple. The helper calculates its own annual multiple only when price, positive MRR, and a monthly revenue period are all explicit.
+| Category | n | Missing MRR | Rankable |
+|---|---:|---:|---|
+| SEO | 3 | 0 | True |
+| Sales | 2 | 2 | False |
+
+A displayed multiple stays a displayed multiple. The helper calculates its own annual multiple only when price, positive revenue, and an explicit monthly period are all present. Unknown-period revenue never enters the MRR average.
 
 ## Tests
 
@@ -103,6 +111,7 @@ Tests cover money parsing, unknown periods, dedupe, personal-field removal, smal
 - Not independent revenue verification. TrustMRR remains the source of its claims.
 - Not a valuation or purchase recommendation.
 - Not an outreach machine. It never sends messages, submits forms, or enriches people.
+- Not permission to ignore TrustMRR's current terms. Review them before collection.
 
 ## Repo map
 
@@ -116,7 +125,9 @@ docs/                    Setup, schema, testing, and live-check notes
 
 ## FAQ
 
-**Can I use the CSV as a lead list?**  Yes, as a company-level research list. The key is `slug`. It deliberately excludes personal contacts and does not claim buying intent.
+**Can I use the CSV as a lead list?**  No. This repo is for niche research, not prospecting or acquisition screening. The key is `slug`; personal contacts and buying-intent claims are deliberately excluded.
+
+**Does it filter companies by my MRR band?**  No. The helper reports the normalized sample and category summaries. Any additional filtering is a separate, explicit human or spreadsheet step.
 
 **What if only two companies match a category?**  You get context, not a category ranking. Two data points are not a trend.
 

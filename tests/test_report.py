@@ -34,8 +34,8 @@ class TrustMRRTests(unittest.TestCase):
 
     def test_dedupe_and_personal_fields_are_removed(self):
         rows = [
-            {"company": "Acme", "slug": "acme", "founder": "A Person", "owner": "Owner Name", "profile_url": "https://example.com/person", "mrr": "$1k"},
-            {"company": "Acme renamed", "slug": "acme", "author": "B Person", "user_name": "person", "linkedin": "https://linkedin.com/in/person", "contact": "person@example.com", "mrr": "$2k"},
+            {"company": "Acme", "slug": "acme", "founder": "A Person", "owner": "Owner Name", "profile_url": "https://example.com/person", "mrr": "$1k", "revenue_period": "monthly"},
+            {"company": "Acme renamed", "slug": "acme", "author": "B Person", "user_name": "person", "linkedin": "https://linkedin.com/in/person", "contact": "person@example.com", "mrr": "$2k", "revenue_period": "monthly"},
         ]
         clean = normalize_records(rows)
         self.assertEqual(len(clean), 1)

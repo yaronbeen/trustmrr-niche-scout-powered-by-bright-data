@@ -8,7 +8,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-PERSONAL = ("author", "founder", "seller", "reviewer", "username", "handle", "email", "phone")
+PUBLIC_FIELDS = {"company", "slug", "category", "mrr", "displayed_revenue", "growth", "price", "revenue_period", "displayed_multiple", "source_url", "captured_at"}
 
 
 def csv_cell(value):
@@ -37,7 +37,7 @@ def annual_multiple(price, mrr, period):
 
 
 def public_record(record):
-    return {k: v for k, v in record.items() if not any(word in k.lower() for word in PERSONAL)}
+    return {k: v for k, v in record.items() if k in PUBLIC_FIELDS}
 
 
 def normalize_records(records):
@@ -48,9 +48,11 @@ def normalize_records(records):
         if not slug:
             raise ValueError("Every TrustMRR row needs a slug")
         row["slug"] = slug
-        row["mrr"] = parse_money(row.get("mrr"))
+        displayed_revenue = parse_money(row.get("displayed_revenue") if row.get("displayed_revenue") is not None else row.get("mrr"))
+        row["displayed_revenue"] = displayed_revenue
+        row["mrr"] = displayed_revenue if row.get("revenue_period") == "monthly" else None
         row["price"] = parse_money(row.get("price"))
-        row["annual_multiple"] = annual_multiple(row.get("price"), row.get("mrr"), row.get("revenue_period"))
+        row["annual_multiple"] = annual_multiple(row.get("price"), displayed_revenue, row.get("revenue_period"))
         deduped[slug] = row
     return [deduped[key] for key in sorted(deduped)]
 
@@ -89,18 +91,22 @@ def apply_diff(rows, previous, key):
     return rows
 
 
+def md(value):
+    return " ".join(str(value if value is not None else "").split()).replace("|", "\\|")
+
+
 def render(result):
     lines = [
         "# TrustMRR Niche Scout | Powered by Bright Data", "",
         "This is a bounded, search-selected sample, not a market census. Metrics are displayed by TrustMRR and are not independently verified.", "",
-        "| Company | Category | Displayed MRR | Annual multiple | Status |", "|---|---|---:|---:|---|",
+        "| Company | Category | Displayed revenue | Period | Annual multiple | Status |", "|---|---|---:|---|---:|---|",
     ]
     for r in result["rows"]:
-        lines.append(f"| {r.get('company', r['slug'])} | {r.get('category', 'unknown')} | {r.get('mrr') if r.get('mrr') is not None else 'unknown'} | {r.get('annual_multiple') if r.get('annual_multiple') is not None else 'unknown'} | {r['status']} |")
+        lines.append(f"| {md(r.get('company', r['slug']))} | {md(r.get('category', 'unknown'))} | {r.get('displayed_revenue') if r.get('displayed_revenue') is not None else 'unknown'} | {md(r.get('revenue_period') or 'unknown')} | {r.get('annual_multiple') if r.get('annual_multiple') is not None else 'unknown'} | {r['status']} |")
     lines += ["", "## Category samples", "", "| Category | n | Missing MRR | Rankable |", "|---|---:|---:|---|"]
     for r in result["categories"]:
-        lines.append(f"| {r['category']} | {r['sample_count']} | {r['missing_mrr']} | {r['rankable']} |")
-    lines += ["", "Categories with fewer than three captured companies are context, not rankings. Company rows may support account research; no personal contacts are included."]
+        lines.append(f"| {md(r['category'])} | {r['sample_count']} | {r['missing_mrr']} | {r['rankable']} |")
+    lines += ["", "Categories with fewer than three captured companies are context, not rankings. Only explicit monthly revenue enters MRR summaries; unknown-period revenue stays displayed revenue. No personal contacts are included."]
     return "\n".join(lines) + "\n"
 
 
@@ -117,7 +123,7 @@ def write_outputs(result, output_dir):
     out.mkdir(parents=True, exist_ok=True)
     (out / "report.md").write_text(result["report"])
     (out / "run.json").write_text(json.dumps(result["snapshot"], indent=2, sort_keys=True) + "\n")
-    fields = ["slug", "company", "category", "mrr", "growth", "price", "annual_multiple", "status", "source_url", "captured_at"]
+    fields = ["slug", "company", "category", "displayed_revenue", "revenue_period", "mrr", "growth", "price", "annual_multiple", "status", "source_url", "captured_at"]
     with (out / "companies.csv").open("w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()

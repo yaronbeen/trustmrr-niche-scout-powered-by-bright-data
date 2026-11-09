@@ -1,6 +1,6 @@
-slug,company,category,mrr,growth,price,annual_multiple,status,source_url,captured_at
-acme-analytics,Acme Analytics,SEO,4000.0,8,72000.0,1.5,new,https://trustmrr.com/startup/acme-analytics,2026-11-09T12:00:00Z
-beta-keywords,Beta Keywords,SEO,2500.0,3,45000.0,1.5,new,https://trustmrr.com/startup/beta-keywords,2026-11-09T12:01:00Z
-coda-content,Coda Content,SEO,1500.0,,,,new,https://trustmrr.com/startup/coda-content,2026-11-09T12:02:00Z
-delta-forms,Delta Forms,Sales,3000.0,4,50000.0,,new,https://trustmrr.com/startup/delta-forms,2026-11-09T12:03:00Z
-ember-crm,Ember CRM,Sales,,,30000.0,,new,https://trustmrr.com/startup/ember-crm,2026-11-09T12:04:00Z
+slug,company,category,displayed_revenue,revenue_period,mrr,growth,price,annual_multiple,status,source_url,captured_at
+acme-analytics,Acme Analytics,SEO,4000.0,monthly,4000.0,8,72000.0,1.5,new,https://trustmrr.com/startup/acme-analytics,2026-11-09T12:00:00Z
+beta-keywords,Beta Keywords,SEO,2500.0,monthly,2500.0,3,45000.0,1.5,new,https://trustmrr.com/startup/beta-keywords,2026-11-09T12:01:00Z
+coda-content,Coda Content,SEO,1500.0,monthly,1500.0,,,,new,https://trustmrr.com/startup/coda-content,2026-11-09T12:02:00Z
+delta-forms,Delta Forms,Sales,3000.0,unknown,,4,50000.0,,new,https://trustmrr.com/startup/delta-forms,2026-11-09T12:03:00Z
+ember-crm,Ember CRM,Sales,,unknown,,,30000.0,,new,https://trustmrr.com/startup/ember-crm,2026-11-09T12:04:00Z

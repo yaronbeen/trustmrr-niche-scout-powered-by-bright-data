@@ -1,10 +1,10 @@
 {
   "example_type": "synthetic",
   "rows": [
-    {"company": "Acme Analytics", "slug": "acme-analytics", "category": "SEO", "mrr": "$4k", "growth": 8, "price": "$72k", "revenue_period": "monthly", "displayed_multiple": "1.5x", "source_url": "https://trustmrr.com/startup/acme-analytics", "captured_at": "2026-11-09T12:00:00Z"},
-    {"company": "Beta Keywords", "slug": "beta-keywords", "category": "SEO", "mrr": "$2.5k", "growth": 3, "price": "$45k", "revenue_period": "monthly", "displayed_multiple": "1.5x", "source_url": "https://trustmrr.com/startup/beta-keywords", "captured_at": "2026-11-09T12:01:00Z"},
-    {"company": "Coda Content", "slug": "coda-content", "category": "SEO", "mrr": "$1.5k", "growth": null, "price": "unknown", "revenue_period": "monthly", "source_url": "https://trustmrr.com/startup/coda-content", "captured_at": "2026-11-09T12:02:00Z"},
-    {"company": "Delta Forms", "slug": "delta-forms", "category": "Sales", "mrr": "$3k", "growth": 4, "price": "$50k", "revenue_period": "unknown", "displayed_multiple": "1.4x", "source_url": "https://trustmrr.com/startup/delta-forms", "captured_at": "2026-11-09T12:03:00Z"},
-    {"company": "Ember CRM", "slug": "ember-crm", "category": "Sales", "mrr": "unknown", "growth": null, "price": "$30k", "revenue_period": "unknown", "source_url": "https://trustmrr.com/startup/ember-crm", "captured_at": "2026-11-09T12:04:00Z"}
+    {"company": "Acme Analytics", "slug": "acme-analytics", "category": "SEO", "displayed_revenue": "$4k", "growth": 8, "price": "$72k", "revenue_period": "monthly", "displayed_multiple": "1.5x", "source_url": "https://trustmrr.com/startup/acme-analytics", "captured_at": "2026-11-09T12:00:00Z"},
+    {"company": "Beta Keywords", "slug": "beta-keywords", "category": "SEO", "displayed_revenue": "$2.5k", "growth": 3, "price": "$45k", "revenue_period": "monthly", "displayed_multiple": "1.5x", "source_url": "https://trustmrr.com/startup/beta-keywords", "captured_at": "2026-11-09T12:01:00Z"},
+    {"company": "Coda Content", "slug": "coda-content", "category": "SEO", "displayed_revenue": "$1.5k", "growth": null, "price": "unknown", "revenue_period": "monthly", "source_url": "https://trustmrr.com/startup/coda-content", "captured_at": "2026-11-09T12:02:00Z"},
+    {"company": "Delta Forms", "slug": "delta-forms", "category": "Sales", "displayed_revenue": "$3k", "growth": 4, "price": "$50k", "revenue_period": "unknown", "displayed_multiple": "1.4x", "source_url": "https://trustmrr.com/startup/delta-forms", "captured_at": "2026-11-09T12:03:00Z"},
+    {"company": "Ember CRM", "slug": "ember-crm", "category": "Sales", "displayed_revenue": "unknown", "growth": null, "price": "$30k", "revenue_period": "unknown", "source_url": "https://trustmrr.com/startup/ember-crm", "captured_at": "2026-11-09T12:04:00Z"}
   ]
 }

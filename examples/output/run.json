@@ -6,6 +6,7 @@
       "category": "SEO",
       "company": "Acme Analytics",
       "displayed_multiple": "1.5x",
+      "displayed_revenue": 4000.0,
       "growth": 8,
       "mrr": 4000.0,
       "price": 72000.0,
@@ -20,6 +21,7 @@
       "category": "SEO",
       "company": "Beta Keywords",
       "displayed_multiple": "1.5x",
+      "displayed_revenue": 2500.0,
       "growth": 3,
       "mrr": 2500.0,
       "price": 45000.0,
@@ -33,6 +35,7 @@
       "captured_at": "2026-11-09T12:02:00Z",
       "category": "SEO",
       "company": "Coda Content",
+      "displayed_revenue": 1500.0,
       "growth": null,
       "mrr": 1500.0,
       "price": null,
@@ -47,8 +50,9 @@
       "category": "Sales",
       "company": "Delta Forms",
       "displayed_multiple": "1.4x",
+      "displayed_revenue": 3000.0,
       "growth": 4,
-      "mrr": 3000.0,
+      "mrr": null,
       "price": 50000.0,
       "revenue_period": "unknown",
       "slug": "delta-forms",
@@ -60,6 +64,7 @@
       "captured_at": "2026-11-09T12:04:00Z",
       "category": "Sales",
       "company": "Ember CRM",
+      "displayed_revenue": null,
       "growth": null,
       "mrr": null,
       "price": 30000.0,
@@ -69,6 +74,6 @@
       "status": "new"
     }
   ],
-  "run_id": "3834fa2c0f2d",
+  "run_id": "103d6bbddf16",
   "schema_version": 1
 }
